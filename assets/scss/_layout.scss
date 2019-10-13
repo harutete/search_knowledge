@@ -1,0 +1,16 @@
+@charset 'UTF-8';
+
+.contents {
+    &-inner {
+        width: 100%;
+        padding: 0 10px;
+    }
+    &-column {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -10px 0 0 -10px;
+        &__item {
+            margin: 10px 0 0 10px;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+@charset 'UTF-8';
+
+.title {
+    &-01 {
+        color: $color-white;
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 20px;
+    }
+}
