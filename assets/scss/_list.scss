@@ -1,0 +1,39 @@
+@charset 'UTF-8';
+
+.list {
+    &-horizontal {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -5px 0 0 -5px;
+        &--center {
+            justify-content: center;
+        }
+        li {
+            padding: 5px 0 0 5px;
+        }
+    }
+    &-word-history {
+        &__item {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            font-size: 1.6rem;
+            padding: 2px 5px;
+            &::before {
+                content: "";
+                transition: width .3s;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background: $color-lightgreen;
+                width: 0;
+                height: 2px;
+            }
+            &:hover {
+                &::before {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

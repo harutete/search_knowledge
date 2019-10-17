@@ -11,13 +11,16 @@ export default {
       '~/assets/scss/_nomalize.scss',
       '~/assets/scss/_layout.scss',
       '~/assets/scss/_title.scss',
+      '~/assets/scss/_list.scss',
+      '~/assets/scss/_utility.scss',
      ]
   },
   fontawesome: {
     component: 'fa'
   },
   plugins: [
-    '~/plugins/dateFormat.ts'
+    { src: '~/plugins/dateFormat.ts' },
+    { src: '~/plugins/localstorage.ts', ssr: false }
   ],
   head: {
     link: [

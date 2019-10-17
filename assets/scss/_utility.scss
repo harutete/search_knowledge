@@ -1,0 +1,32 @@
+@charset 'UTF-8';
+
+.u {
+    &-bg {
+        &-purple {
+            background-color: $color-lightpurple;
+        }
+    }
+    &-txt {
+        &-center {
+            text-align: center;
+        }
+        &-right {
+            text-align: right;
+        }
+        &-left {
+            text-align: left;
+        }
+    }
+    &-w {
+        @for $i from 1 through 9 {
+            &-0#{$i} {
+                width: 100% / 12 * $i
+            }
+        }
+        @for $i from 10 through 12 {
+            &-0#{$i} {
+                width: 100% / 12 * $i
+            }
+        }
+    }
+}

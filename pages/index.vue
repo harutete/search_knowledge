@@ -2,14 +2,21 @@
     <div id="contents-main">
         <div class="contents-inner">
             <h1 class="title-01">Knowledge Search</h1>
-            <div class="contents-column">
+            <div class="contents-column contents-column--center">
                 <div class="contents-column__item">
                     <input type="text" v-model="keyword" placeholder="Keyword..." class="input-utility" />
                 </div>
                 <div class="contents-column__item">
-                    <button @click="getKnowledgeData" type="button" class="btn-utility">GET!</button>
+                    <button @click="getKnowledgeData" type="button" class="btn-utility">GET</button>
                 </div>
             </div>
+            <ul class="list-horizontal list-horizontal--center list-word-history">
+                <li v-for="(word, index) in words" :key="`word${index}`">
+                    <span @click="showPastResults" class="list-word-history__item">
+                        {{ word }}
+                    </span>
+                </li>
+            </ul>
             <template v-show="!isLength">
                 <div class="loading"></div>
             </template>
@@ -21,7 +28,12 @@
                     >
                         <div class="card-item__inner">
                             <div>
-                                <h2 class="card-item__title"><a :href="data.url" target="_blank">{{ data.title }}</a></h2>
+                                <h2 class="card-item__title">
+                                    <a :href="data.url" target="_blank">
+                                        {{ data.title }}
+                                        <fa :icon=faWindowRestore />
+                                    </a>
+                                </h2>
                             </div>
                             <div class="card-item__contents">
                                 <ul class="card-item__tags">
@@ -37,6 +49,7 @@
                                         {{ data.updated_at | dateFormat }}
                                     </div>
                                     <div>
+                                        <fa :icon=faThumbsUp />
                                         {{ data.likes_count }}
                                     </div>
                                 </div>
@@ -61,10 +74,17 @@
             return {
                 keyword: '',
                 isLength: false,
-                knowledgeData: null
+                knowledgeData: null,
+                results: null
             }
         },
         computed: {
+            words () {
+                return this.$store.state.wordHistory.wordList
+            },
+            pastResults () {
+                return this.$store.state.pastResults.results
+            },
             faWindowRestore () {
                 return faWindowRestore
             },
@@ -75,21 +95,33 @@
         methods: {
             async getKnowledgeData () {
                 try {
-                    const params = {
+                    let params
+                    let response
+
+                    if (this.keyword === '') {
+                        return
+                    }
+
+                    params = {
                         page: 1,
                         per_page: 3,
                         query: this.keyword
                     }
-                    const response = await axios.get(URL, { params })
+                    response = await axios.get(URL, { params })
 
                     this.knowledgeData = response.data
                     this.isLength = true
-                    console.log(this.knowledgeData)
+                    this.$store.commit('wordHistory/add', params.query)
                 } catch (error) {
                     console.error(error)
 
                     this.isLength = false
                 }
+            },
+            showPastResults (e: any) {
+                const data = this.pastResults
+                console.log(data)
+                // this.pastResults = data.find(item: any　=> item.text === e.target.innerHTML)
             }
         }
     })
@@ -110,7 +142,7 @@
 #contents {
     &-main {
         display: flex;
-        background: linear-gradient(-45deg, #BEE6E1, #B6DAD6, #E3CFE2, #D8C0D8) {
+        background: linear-gradient(-45deg, #BEE6E1, $color-lightgreen, #E3CFE2, $color-lightpurple) {
             size: 200% 200%;
         }
         animation: moveGradient 10s ease infinite;
@@ -176,7 +208,7 @@
             padding: 10px;
         }
         &__title {
-            background: #D8C0D8;
+            background: $color-lightpurple;
             border-radius: 3px;
             padding: 5px;
             a {
