@@ -104,7 +104,7 @@
 
                     params = {
                         page: 1,
-                        per_page: 3,
+                        per_page: 20,
                         query: this.keyword
                     }
                     response = await axios.get(URL, { params })

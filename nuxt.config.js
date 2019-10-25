@@ -20,7 +20,7 @@ export default {
   },
   plugins: [
     { src: '~/plugins/dateFormat.ts' },
-    { src: '~/plugins/localstorage.ts', ssr: false }
+    { src: '~/plugins/cookieStorage.ts' }
   ],
   head: {
     link: [
