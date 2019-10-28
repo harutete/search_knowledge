@@ -12,7 +12,7 @@
             </div>
             <ul class="list-horizontal list-horizontal--center list-word-history">
                 <li v-for="(word, index) in words" :key="`word${index}`">
-                    <span @click="showPastResults" class="list-word-history__item">
+                    <span class="list-word-history__item">
                         {{ word }}
                     </span>
                 </li>
@@ -82,9 +82,6 @@
             words () {
                 return this.$store.state.wordHistory.wordList
             },
-            pastResults () {
-                return this.$store.state.pastResults.results
-            },
             faWindowRestore () {
                 return faWindowRestore
             },
@@ -117,11 +114,6 @@
 
                     this.isLength = false
                 }
-            },
-            showPastResults (e: any) {
-                const data = this.pastResults
-                console.log(data)
-                // this.pastResults = data.find(item: any　=> item.text === e.target.innerHTML)
             }
         }
     })
