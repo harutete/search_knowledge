@@ -44,11 +44,11 @@
                                     </li>
                                 </ul>
                                 <p class="card-item__description">{{ data.body }}</p>
-                                <div>
-                                    <div>
+                                <div class="contents-column contents-column--fix">
+                                    <div class="contents-column__item u-w-06">
                                         {{ data.updated_at | dateFormat }}
                                     </div>
-                                    <div>
+                                    <div class="contents-column__item u-w-06 u-txt-right">
                                         <fa :icon=faThumbsUp />
                                         {{ data.likes_count }}
                                     </div>
