@@ -1,8 +1,7 @@
 <template>
     <div id="contents-main">
         <div class="contents-inner">
-            <modeChangeButton></modeChangeButton>
-            <h1 class="title-01">Knowledge Search</h1>
+            <UtilHeading title="Knowledge Search"></UtilHeading>
             <div class="contents-column contents-column--center">
                 <div class="contents-column__item">
                     <input type="text" v-model="keyword" placeholder="Keyword..." class="input-utility" />
@@ -13,7 +12,7 @@
             </div>
             <ul class="list-horizontal list-horizontal--center list-word-history">
                 <li v-for="(word, index) in words" :key="`word${index}`">
-                    <span class="list-word-history__item">
+                    <span @click="getPastResultData" class="list-word-history__item">
                         {{ word }}
                     </span>
                 </li>
@@ -67,13 +66,19 @@
     import Vue from 'vue'
     import axios from 'axios'
     import { faWindowRestore, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
-    import modeChangeButton from '~/components/modeChangeButton.vue'
+    import modeChangeButton from '~/components/modeChangeButton'
+    import UtilHeading from '~/components/atoms/UtilHeading'
+    import UtilTextField from '~/components/atoms/UtilTextField'
+    import UtilButton from '~/components/atoms/UtilButton'
 
     const URL = 'https://qiita.com/api/v2/items'
 
     export default Vue.extend ({
         components: {
-            modeChangeButton
+            modeChangeButton,
+            UtilHeading,
+            UtilTextField,
+            UtilButton
         },
         data () {
             return {
@@ -95,6 +100,12 @@
             }
         },
         methods: {
+            getPastResultData (e) {
+                let value = e.target.innerHTML.trim()
+
+                this.keyword = value
+                this.getKnowledgeData()
+            },
             async getKnowledgeData () {
                 try {
                     let params
