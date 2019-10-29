@@ -137,7 +137,7 @@
         background: linear-gradient(-45deg, #BEE6E1, $color-lightgreen, #E3CFE2, $color-lightpurple) {
             size: 200% 200%;
         }
-        animation: moveGradient 10s ease infinite;
+        animation: moveGradient 10s ease infinite alternate;
         width: 100vw;
         height: 100%;
         min-height: 100vh;
