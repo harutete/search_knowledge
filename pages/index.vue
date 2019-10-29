@@ -1,6 +1,7 @@
 <template>
     <div id="contents-main">
         <div class="contents-inner">
+            <modeChangeButton></modeChangeButton>
             <h1 class="title-01">Knowledge Search</h1>
             <div class="contents-column contents-column--center">
                 <div class="contents-column__item">
@@ -66,10 +67,14 @@
     import Vue from 'vue'
     import axios from 'axios'
     import { faWindowRestore, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+    import modeChangeButton from '~/components/modeChangeButton.vue'
 
     const URL = 'https://qiita.com/api/v2/items'
 
     export default Vue.extend ({
+        components: {
+            modeChangeButton
+        },
         data () {
             return {
                 keyword: '',
