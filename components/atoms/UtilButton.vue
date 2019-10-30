@@ -1,5 +1,5 @@
 <template>
-    <button @click="$emit('click-event')" :type="type" class="btn-utility">
+    <button @click="clickEvent" :type="type" class="btn-utility">
         {{ text }}
     </button>
 </template>
@@ -16,6 +16,11 @@ export default ({
             default: '',
             type: String,
             required: true
+        }
+    },
+    methods: {
+        clickEvent () {
+            this.$emit('click-handler')
         }
     }
 })

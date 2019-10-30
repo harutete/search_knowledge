@@ -22,6 +22,7 @@
     "js-cookie": "^2.2.1",
     "nuxt": "^2.10.0",
     "nuxt-fontawesome": "^0.4.0",
+    "vue-loaders": "^3.0.2",
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {

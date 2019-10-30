@@ -7,17 +7,19 @@ export default ({ store, req, isDev }) => {
 
   createPersistedState({
     key: 'words',
+    paths: ['wordHistory'],
     storage: {
       getItem: (key: string) => {
         if (process.client) {
-          Cookies.getJSON(key)
-        } else {
-          cookie.parse(req.headers.cookie || '')[key]
+          Cookies.get(key)
         }
+        // } else {
+        //   cookie.parse(req.headers.cookie || '')[key]
+        // }
       },
       setItem: (key: string, value: any) =>
         Cookies.set(key, value, { expires: day, secure: !isDev }),
-      removeItem: (key) => Cookies.remove(key)
+      removeItem: (key: string) => Cookies.remove(key)
     }
   })(store)
 }

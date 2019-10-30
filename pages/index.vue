@@ -4,10 +4,16 @@
             <UtilHeading title="Knowledge Search"></UtilHeading>
             <div class="contents-column contents-column--center">
                 <div class="contents-column__item">
-                    <input type="text" v-model="keyword" placeholder="Keyword..." class="input-utility" />
+                    <UtilTextField v-model="keyword"
+                        placeHolder="Enter Keyword"
+                    >
+                    </UtilTextField>
                 </div>
                 <div class="contents-column__item">
-                    <button @click="getKnowledgeData" type="button" class="btn-utility">GET</button>
+                    <UtilButton @click-handler="getKnowledgeData"
+                        text="Get"
+                    >
+                    </UtilButton>
                 </div>
             </div>
             <ul class="list-horizontal list-horizontal--center list-word-history">
@@ -17,9 +23,9 @@
                     </span>
                 </li>
             </ul>
-            <template v-show="!isLength">
-                <div class="loading"></div>
-            </template>
+            <!-- <template>
+                <vue-loaders name="ball-beat" color="red" scale="1"></vue-loaders>
+            </template> -->
             <template v-show="isLength">
                 <div class="card-wrap">
                     <div  v-for="(data, index) in knowledgeData"
@@ -65,6 +71,8 @@
 <script lang="ts">
     import Vue from 'vue'
     import axios from 'axios'
+    import 'vue-loaders/dist/vue-loaders.css'
+    import VueLoaders from 'vue-loaders'
     import { faWindowRestore, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
     import modeChangeButton from '~/components/modeChangeButton'
     import UtilHeading from '~/components/atoms/UtilHeading'
@@ -175,6 +183,7 @@
         padding: 5px;
         &::placeholder {
             color: $color-white;
+            opacity: .8;
         }
     }
 }
