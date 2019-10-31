@@ -23,10 +23,8 @@
                     </span>
                 </li>
             </ul>
-            <!-- <template>
-                <vue-loaders name="ball-beat" color="red" scale="1"></vue-loaders>
-            </template> -->
-            <template v-show="isLength">
+            <LoadingSpinner v-show="isLoading" />
+            <template v-show="isLoading">
                 <div class="card-wrap">
                     <div  v-for="(data, index) in knowledgeData"
                     :key="`data${index}`"
@@ -71,19 +69,19 @@
 <script lang="ts">
     import Vue from 'vue'
     import axios from 'axios'
-    import 'vue-loaders/dist/vue-loaders.css'
-    import VueLoaders from 'vue-loaders'
     import { faWindowRestore, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
-    import modeChangeButton from '~/components/modeChangeButton'
-    import UtilHeading from '~/components/atoms/UtilHeading'
-    import UtilTextField from '~/components/atoms/UtilTextField'
-    import UtilButton from '~/components/atoms/UtilButton'
+    import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue'
+    // import ModeChangeButton from '~/components/ModeChangeButton.vue'
+    import UtilHeading from '~/components/atoms/UtilHeading.vue'
+    import UtilTextField from '~/components/atoms/UtilTextField.vue'
+    import UtilButton from '~/components/atoms/UtilButton.vue'
 
     const URL = 'https://qiita.com/api/v2/items'
 
     export default Vue.extend ({
         components: {
-            modeChangeButton,
+            LoadingSpinner,
+            // ModeChangeButton,
             UtilHeading,
             UtilTextField,
             UtilButton
@@ -91,9 +89,8 @@
         data () {
             return {
                 keyword: '',
-                isLength: false,
+                isLoading: false,
                 knowledgeData: null,
-                results: null
             }
         },
         computed: {
@@ -108,7 +105,7 @@
             }
         },
         methods: {
-            getPastResultData (e) {
+            getPastResultData (e: any): void {
                 let value = e.target.innerHTML.trim()
 
                 this.keyword = value
@@ -128,15 +125,16 @@
                         per_page: 20,
                         query: this.keyword
                     }
+
+                    this.isLoading = true
+
                     response = await axios.get(URL, { params })
 
                     this.knowledgeData = response.data
-                    this.isLength = true
                     this.$store.commit('wordHistory/add', params.query)
+                    this.isLoading = false
                 } catch (error) {
                     console.error(error)
-
-                    this.isLength = false
                 }
             }
         }

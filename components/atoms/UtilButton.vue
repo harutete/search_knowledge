@@ -19,7 +19,7 @@ export default ({
         }
     },
     methods: {
-        clickEvent () {
+        clickEvent (): void {
             this.$emit('click-handler')
         }
     }
