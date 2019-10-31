@@ -16,6 +16,7 @@
                     </UtilButton>
                 </div>
             </div>
+            <p v-show="isEmpty" class="u-txt-center">キーワードを入力してください。</p>
             <ul class="list-horizontal list-horizontal--center list-word-history">
                 <li v-for="(word, index) in words" :key="`word${index}`">
                     <span @click="getPastResultData" class="list-word-history__item">
@@ -89,6 +90,7 @@
         data () {
             return {
                 keyword: '',
+                isEmpty: false,
                 isLoading: false,
                 knowledgeData: null,
             }
@@ -117,7 +119,11 @@
                     let response
 
                     if (this.keyword === '') {
+                        this.isEmpty = true
+
                         return
+                    } else {
+                        this.isEmpty = false
                     }
 
                     params = {
