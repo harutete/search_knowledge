@@ -1,10 +1,8 @@
 import Vue from 'vue'
 
-Vue.filter('dateFormat', (date: string) => {
+export const dateFormat = (date: string, format: string) => {
     let d
-    let year
-    let month
-    let day
+    let formatStr = format
     let weekDay
     let weekDayStr
 
@@ -13,11 +11,15 @@ Vue.filter('dateFormat', (date: string) => {
     }
 
     d = new Date(date)
-    year = d.getFullYear()
-    month = d.getMonth()
-    day = d.getDate()
+
     weekDay = d.getDay()
     weekDayStr = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][weekDay]
+    formatStr = formatStr.replace(/YYYY/, d.getFullYear().toString())
+    formatStr = formatStr.replace(/MM/, d.getMonth().toString())
+    formatStr = formatStr.replace(/DD/, d.getDate().toString())
+    formatStr = `${formatStr}(${weekDay})`
 
-    return `${year}.${month}.${day} (${weekDayStr})`
-})
+    return formatStr
+}
+
+Vue.prototype.$dateFormat = dateFormat

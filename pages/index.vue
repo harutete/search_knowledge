@@ -1,68 +1,80 @@
 <template>
     <div id="contents-main">
         <div class="contents-inner">
-            <UtilHeading title="Knowledge Search"></UtilHeading>
+            <UtilHeading title="Knowledge Search" />
             <div class="contents-column contents-column--center">
                 <div class="contents-column__item">
-                    <UtilTextField v-model="keyword"
+                    <UtilTextField
                         placeHolder="Enter Keyword"
-                    >
-                    </UtilTextField>
+                        v-model="keyword"
+                    />
                 </div>
                 <div class="contents-column__item">
-                    <UtilButton @click-handler="getKnowledgeData"
+                    <UtilButton
                         text="Get"
-                    >
-                    </UtilButton>
+                        @click-handler="getKnowledgeData"
+                    />
                 </div>
             </div>
-            <p v-show="isEmpty" class="u-txt-center">キーワードを入力してください。</p>
+            <p
+                v-show="isEmpty"
+                class="u-txt-center u-mt-15"
+            >
+                キーワードを入力してください。
+            </p>
             <ul class="list-horizontal list-horizontal--center list-word-history">
-                <li v-for="(word, index) in words" :key="`word${index}`">
-                    <span @click="getPastResultData" class="list-word-history__item">
-                        {{ word }}
-                    </span>
+                <li
+                    v-for="(word, index) in words"
+                    :key="`word${index}`"
+                >
+                    <TextAnchor
+                        :text="word"
+                        @clickHandler="getPastResultData"
+                    />
                 </li>
             </ul>
             <LoadingSpinner v-show="isLoading" />
-            <template v-show="isLoading">
-                <div class="card-wrap">
-                    <div  v-for="(data, index) in knowledgeData"
+            <div class="card-wrap">
+                <div
+                    v-for="(data, index) in knowledgeData"
                     :key="`data${index}`"
                     class="card-item"
-                    >
-                        <div class="card-item__inner">
-                            <div>
-                                <h2 class="card-item__title">
-                                    <a :href="data.url" target="_blank">
-                                        {{ data.title }}
-                                        <fa :icon=faWindowRestore />
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="card-item__contents">
-                                <ul class="card-item__tags">
-                                    <li v-for="(tag, index) in data.tags"
+                >
+                    <div class="card-item__inner">
+                        <div>
+                            <h2 class="card-item__title">
+                                <a
+                                    :href="data.url"
+                                    target="_blank"
+                                >
+                                    {{ data.title }}
+                                    <fa :icon=faWindowRestore />
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="card-item__contents">
+                            <ul class="card-item__tags">
+                                <li
+                                    v-for="(tag, index) in data.tags"
                                     :key="`tag${index}`"
-                                    >
-                                        {{ tag.name }}
-                                    </li>
-                                </ul>
-                                <p class="card-item__description">{{ data.body }}</p>
-                                <div class="contents-column contents-column--fix">
-                                    <div class="contents-column__item u-w-06">
-                                        {{ data.updated_at | dateFormat }}
-                                    </div>
-                                    <div class="contents-column__item u-w-06 u-txt-right">
-                                        <fa :icon=faThumbsUp />
-                                        {{ data.likes_count }}
-                                    </div>
+                                >
+                                    {{ tag.name }}
+                                </li>
+                            </ul>
+                            <p class="card-item__description">{{ data.body }}</p>
+                            <div class="contents-column contents-column--fix">
+                                <div class="contents-column__item u-w-06">
+                                    {{ $dateFormat(data.updated_at, 'YYYY.MM.DD') }}
+                                </div>
+                                <div class="contents-column__item u-w-06 u-txt-right">
+                                    <fa :icon=faThumbsUp />
+                                    {{ data.likes_count }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </template>
+            </div>
         </div>
     </div>
 </template>
@@ -76,16 +88,18 @@
     import UtilHeading from '~/components/atoms/UtilHeading.vue'
     import UtilTextField from '~/components/atoms/UtilTextField.vue'
     import UtilButton from '~/components/atoms/UtilButton.vue'
+    import TextAnchor from '~/components/atoms/TextAnchor.vue'
 
     const URL = 'https://qiita.com/api/v2/items'
 
-    export default Vue.extend ({
+    export default Vue.extend({
         components: {
             LoadingSpinner,
             // ModeChangeButton,
             UtilHeading,
             UtilTextField,
-            UtilButton
+            UtilButton,
+            TextAnchor
         },
         data () {
             return {
@@ -96,24 +110,24 @@
             }
         },
         computed: {
-            words () {
+            words (): string {
                 return this.$store.state.wordHistory.wordList
             },
-            faWindowRestore () {
+            faWindowRestore (): any {
                 return faWindowRestore
             },
-            faThumbsUp () {
+            faThumbsUp (): any {
                 return faThumbsUp
             }
         },
         methods: {
-            getPastResultData (e: any): void {
-                let value = e.target.innerHTML.trim()
+            getPastResultData (elem: any): void {
+                let value = elem.innerHTML.trim()
 
                 this.keyword = value
                 this.getKnowledgeData()
             },
-            async getKnowledgeData () {
+            async getKnowledgeData (): Promise<void> {
                 try {
                     let params
                     let response
