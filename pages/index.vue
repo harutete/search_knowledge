@@ -2,11 +2,12 @@
     <div id="contents-main">
         <div class="contents-inner">
             <UtilHeading title="Knowledge Search" />
-            <div class="contents-column contents-column--center">
+            <div class="contents-column contents-column--center u-mt-10">
                 <div class="contents-column__item">
                     <UtilTextField
                         placeHolder="Enter Keyword"
                         v-model="keyword"
+                        ref="target"
                     />
                 </div>
                 <div class="contents-column__item">
@@ -22,7 +23,7 @@
             >
                 キーワードを入力してください。
             </p>
-            <ul class="list-horizontal list-horizontal--center list-word-history">
+            <ul class="list-horizontal list-horizontal--center list-word-history u-mt-10">
                 <li
                     v-for="(word, index) in words"
                     :key="`word${index}`"
@@ -41,7 +42,7 @@
                     class="card-item"
                 >
                     <div class="card-item__inner">
-                        <div>
+                        <div :ref="hoge">
                             <h2 class="card-item__title">
                                 <a
                                     :href="data.url"
@@ -118,7 +119,7 @@
             },
             faThumbsUp (): any {
                 return faThumbsUp
-            }
+            },
         },
         methods: {
             getPastResultData (elem: any): void {
@@ -126,6 +127,9 @@
 
                 this.keyword = value
                 this.getKnowledgeData()
+            },
+            adjustHeight (): void {
+                console.log(this.$refs.target.clientHeight)
             },
             async getKnowledgeData (): Promise<void> {
                 try {
@@ -152,11 +156,15 @@
 
                     this.knowledgeData = response.data
                     this.$store.commit('wordHistory/add', params.query)
+                    this.adjustHeight()
                     this.isLoading = false
                 } catch (error) {
                     console.error(error)
                 }
             }
+        },
+        mounted (): void {
+            console.log(this.$refs.target.$el.clientHeight)
         }
     })
 </script>
