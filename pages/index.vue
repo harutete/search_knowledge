@@ -34,49 +34,9 @@
                 </li>
             </ul>
             <LoadingSpinner v-show="isLoading" />
-            <div class="card-wrap">
-                <div
-                    v-for="(data, index) in knowledgeData"
-                    :key="`data${index}`"
-                    class="card-item"
-                >
-                    <div class="card-item__inner">
-                        <div>
-                            <h2
-                                class="card-item__title"
-                            >
-                                <a
-                                    :href="data.url"
-                                    target="_blank"
-                                >
-                                    {{ data.title }}
-                                    <fa :icon=faWindowRestore />
-                                </a>
-                            </h2>
-                        </div>
-                        <div class="card-item__contents">
-                            <ul class="card-item__tags">
-                                <li
-                                    v-for="(tag, index) in data.tags"
-                                    :key="`tag${index}`"
-                                >
-                                    {{ tag.name }}
-                                </li>
-                            </ul>
-                            <p class="card-item__description">{{ data.body }}</p>
-                            <div class="contents-column contents-column--fix">
-                                <div class="contents-column__item u-w-06">
-                                    {{ $dateFormat(data.updated_at, 'YYYY.MM.DD') }}
-                                </div>
-                                <div class="contents-column__item u-w-06 u-txt-right">
-                                    <fa :icon=faThumbsUp />
-                                    {{ data.likes_count }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <CardContent
+                :data="knowledgeData"
+            />
         </div>
     </div>
 </template>
@@ -87,6 +47,7 @@
     import { faWindowRestore, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
     import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue'
     // import ModeChangeButton from '~/components/ModeChangeButton.vue'
+    import CardContent from '~/components/molecules/CardContent.vue'
     import UtilHeading from '~/components/atoms/UtilHeading.vue'
     import UtilTextField from '~/components/atoms/UtilTextField.vue'
     import UtilButton from '~/components/atoms/UtilButton.vue'
@@ -98,6 +59,7 @@
         components: {
             LoadingSpinner,
             // ModeChangeButton,
+            CardContent,
             UtilHeading,
             UtilTextField,
             UtilButton,
