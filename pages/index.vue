@@ -7,7 +7,6 @@
                     <UtilTextField
                         placeHolder="Enter Keyword"
                         v-model="keyword"
-                        ref="target"
                     />
                 </div>
                 <div class="contents-column__item">
@@ -42,8 +41,10 @@
                     class="card-item"
                 >
                     <div class="card-item__inner">
-                        <div :ref="hoge">
-                            <h2 class="card-item__title">
+                        <div>
+                            <h2
+                                class="card-item__title"
+                            >
                                 <a
                                     :href="data.url"
                                     target="_blank"
@@ -128,9 +129,11 @@
                 this.keyword = value
                 this.getKnowledgeData()
             },
-            adjustHeight (): void {
-                console.log(this.$refs.target.clientHeight)
-            },
+            // adjustHeight (index: any): void {
+            //     let refs = this.$refs.target[index]
+
+            //     console.log(index)
+            // },
             async getKnowledgeData (): Promise<void> {
                 try {
                     let params
@@ -156,15 +159,11 @@
 
                     this.knowledgeData = response.data
                     this.$store.commit('wordHistory/add', params.query)
-                    this.adjustHeight()
                     this.isLoading = false
                 } catch (error) {
                     console.error(error)
                 }
             }
-        },
-        mounted (): void {
-            console.log(this.$refs.target.$el.clientHeight)
         }
     })
 </script>
