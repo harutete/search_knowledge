@@ -41,9 +41,11 @@ export default ({})
             transform: translate(-50%, -50%);
             margin-right: -5px;
             &__item {
-                background: $color-lightpurple;
+                background: rgba($color-lightpurple, .6);
+                border: 1px solid $color-lightpurple {
+                    radius: 100%;
+                }
                 margin-right: 5px;
-                border-radius: 100%;
                 width: 15px;
                 height: 15px;
                 &:first-child {
