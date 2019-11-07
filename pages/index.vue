@@ -91,11 +91,6 @@
                 this.keyword = value
                 this.getKnowledgeData()
             },
-            // adjustHeight (index: any): void {
-            //     let refs = this.$refs.target[index]
-
-            //     console.log(index)
-            // },
             async getKnowledgeData (): Promise<void> {
                 try {
                     let params
@@ -122,6 +117,7 @@
                     this.knowledgeData = response.data
                     this.$store.commit('wordHistory/add', params.query)
                     this.isLoading = false
+                    this.keyword = ''
                 } catch (error) {
                     console.error(error)
                 }
