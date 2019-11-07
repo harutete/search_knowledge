@@ -26,7 +26,7 @@
                     <p class="card-item__description">{{ item.body }}</p>
                     <div class="contents-column contents-column--fix">
                         <div class="contents-column__item u-w-06">
-                            {{ $dateFormat(item.updated_at, 'YYYY.MM.DD') }}
+                            {{ $dateFormat(item.updated_at, 'YYYY.MM.DD (DD)') }}
                         </div>
                         <div class="contents-column__item u-w-06 u-txt-right">
                             <fa :icon=faThumbsUp />
@@ -44,11 +44,6 @@ import { faWindowRestore, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import CardHeading from '~/components/atoms/CardHeading.vue'
 
 export default ({
-    data () {
-        return {
-            title: 'hoge!'
-        }
-    },
     components: {
         CardHeading
     },
