@@ -152,6 +152,7 @@
         width: 100vw;
         height: 100%;
         min-height: 100vh;
+        padding-bottom: 30px;
     }
 }
 .search {
